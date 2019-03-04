@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+ Add New Project
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action = "/project/create"  method= "post">
+
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" class="form-control"  aria-describedby="emailHelp" placeholder="Enter  Title ">
+    </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" class="form-control"  aria-describedby="emailHelp" placeholder="Enter Description">
+    </div>
+
+   <div class="form-group">
+    <label for="startDate">Start Date</label>
+    <input type="text" id= "startDate" name="startDate" class="form-control"  aria-describedby="emailHelp" placeholder="Enter Start Date">
+   </div>
+
+   <div class="form-group">
+    <label for="endDate">End Date</label>
+    <input type="text" id ="endDate" name="endDate" class="form-control"  aria-describedby="emailHelp" placeholder="Enter End Date">
+   </div>
+
+   <div class="form-group">
+    <label for="cost">Cost</label>
+    <input type="text" id="cost" name="cost" class="form-control"  aria-describedby="emailHelp" placeholder="Enter Cost">
+    </div>
+
+       <div class="form-group">
+     <select name="status" class="custom-level">
+  <option selected>Status</option>
+  <option value="1">Complete</option>
+  <option value="2">Pending</option>
+
+</select>
+       </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
+      <th scope="col">Cost</th>
+      <th scope="col">Status</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for project in records %}
+    <tr>
+      <th scope="row">{{project.id}}</th>
+      <td>{{project.title}}</td>
+      <td>{{project.description}}</td>
+      <td>{{project.startDate}}</td>
+      <td>{{project.endDate}}</td>
+      <td>{{project.cost}}</td>
+      <td>{{project.status}}</td>
+      <td><!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#record{{ project.id}}">
+  Edit Record
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="record{{ project.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action = "/project/edit/{{project.id}}"  method= "post">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" id="edittitle" name="title" value="{{ project.title }}" class="form-control"  aria-describedby="emailHelp" placeholder="Enter  Title ">
+    </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" value="{{project.description}}" class="form-control"  aria-describedby="emailHelp" placeholder="Enter Description">
+    </div>
+
+   <div class="form-group">
+    <label for="startDate">Start Date</label>
+    <input type="text" id= "startDate" name="startDate"  value="{{project.startDate}}" class="form-control"  aria-describedby="emailHelp" placeholder="Enter Start Date">
+   </div>
+
+   <div class="form-group">
+    <label for="endDate">End Date</label>
+    <input type="text" id ="endDate" name="endDate" value="{{project.endDate}}" class="form-control"   aria-describedby="emailHelp" placeholder="Enter End Date">
+   </div>
+
+   <div class="form-group">
+    <label for="cost">Cost</label>
+    <input type="text" id="cost" name="cost" value="{{project.cost}}" class="form-control"  aria-describedby="emailHelp" placeholder="Enter Cost">
+    </div>
+
+       <div class="form-group">
+     <select name="status" class="custom-level">
+  <option selected>Status</option>
+  <option value="1">Complete</option>
+  <option value="2">Pending</option>
+
+</select>
+       </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div></td>
+        <td><form action="/project/delete/{{project.id }}" method="POST">
+           <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+        </td>
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<img src="{{ graph|safe}}" height="400px" type = "image/svg"/>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
